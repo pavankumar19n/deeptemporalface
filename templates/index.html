@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deepfake Video Detection</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://socradar.io/wp-content/uploads/2025/03/ai.jpg.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            width: 420px;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            border: none;
+            width: 100%;
+            color: #000;
+        }
+
+        button {
+            background-color: #ff4d6d;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff758c;
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎥 Deepfake Video Detection</h1>
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+            <input type="file" name="video" accept="video/*" required><br>
+            <button type="submit">Analyze Video</button>
+        </form>
+        <div class="footer">
+            Powered by <strong>XceptionNet + LSTM + XAI</strong>
+        </div>
+    </div>
+</body>
+</html>

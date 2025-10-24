@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Deepfake Detection Result</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: white;
+            background-color: {{ color }};
+        }
+        .container {
+            margin-top: 60px;
+        }
+        video {
+            width: 480px;
+            border: 5px solid white;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: #ffffff;
+            color: black;
+            padding: 12px 25px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #f8f8f8;
+        }
+        .explanation-container {
+            display: none; /* Hidden initially */
+            background: #ffffff;
+            color: #000;
+            margin: 40px auto;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 1100px;
+            padding: 30px;
+            text-align: left;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .explanation-text {
+            width: 50%;
+            font-size: 16px;
+            line-height: 1.6;
+            padding-right: 30px;
+        }
+        .xai-image {
+            width: 45%;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+        }
+        .color-legend {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f7f7f7;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .color-legend div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .color-box {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+        a {
+            color: #fff;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ label }}</h1>
+        <video controls>
+            <source src="{{ url_for('static', filename='uploads/' + video_filename) }}" type="video/mp4">
+        </video>
+        <br>
+        <button class="btn" onclick="toggleExplanation()">View Explanation</button>
+        <br><br>
+        <a href="/">← Go Back</a>
+    </div>
+
+    <div class="explanation-container" id="explainBox">
+        <div class="explanation-text">
+            <h2>Model Explanation</h2>
+            <p>{{ explanation|safe }}</p>
+
+            <div class="color-legend">
+                <h3>Color Legend (Grad-CAM)</h3>
+                <div><div class="color-box" style="background:red;"></div> <b>Red</b> — Regions most influential in decision (high importance)</div>
+                <div><div class="color-box" style="background:yellow;"></div> <b>Yellow</b> — Moderately important facial regions</div>
+                <div><div class="color-box" style="background:green;"></div> <b>Green</b> — Areas with medium relevance or neutral contribution</div>
+                <div><div class="color-box" style="background:blue;"></div> <b>Blue</b> — Less relevant areas; low model focus</div>
+                <div><div class="color-box" style="background:purple;"></div> <b>Purple</b> — Background or areas ignored by the model</div>
+            </div>
+        </div>
+        <img src="{{ url_for('static', filename=xai_image) }}" alt="XAI Heatmap" class="xai-image">
+    </div>
+
+    <script>
+        function toggleExplanation() {
+            const box = document.getElementById("explainBox");
+            if (box.style.display === "flex") {
+                box.style.display = "none";
+            } else {
+                box.style.display = "flex";
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
